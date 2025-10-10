@@ -2,13 +2,22 @@ from fastapi import FastAPI
 from database import engine, Base
 import models
 from routers import titulares, dispositivos, finalidades, tipos_dados, opcoes_tratamento, consentimentos
+from messaging import connect_mqtt, disconnect_mqtt
+from contextlib import asynccontextmanager
 
 Base.metadata.create_all(bind=engine)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    connect_mqtt()
+    yield
+    disconnect_mqtt()
 
 app = FastAPI(
     title="Módulo de Gerenciamento de Consentimento",
     description="API para gerenciar o consentimento de titulares de dados em um ecossistema IoT, conforme a LGPD.",
-    version="0.1.0"
+    version="0.1.0",
+    lifespan=lifespan
 )
 
 # Inclui os routers

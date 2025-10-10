@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 import models
 import schemas
 from datetime import datetime, timezone
+from messaging import publish_policy_update
 
 def create_registro_consentimento(db: Session, consentimento: schemas.RegistroConsentimentoCreate):
     """ Cria um novo registro de consentimento e um log de auditoria. """
@@ -24,6 +25,10 @@ def create_registro_consentimento(db: Session, consentimento: schemas.RegistroCo
     db.add(log_auditoria)
 
     db.commit()
+    publish_policy_update(
+        titular_id=db_consentimento.titular_id, 
+        dispositivo_id=db_consentimento.dispositivo_id
+    )
     db.refresh(db_consentimento)
     return db_consentimento
 
@@ -58,6 +63,10 @@ def revogar_consentimento(db: Session, consentimento_id: int):
     db.add(log_auditoria)
     
     db.commit()
+    publish_policy_update(
+        titular_id=db_consentimento.titular_id, 
+        dispositivo_id=db_consentimento.dispositivo_id
+    )
     db.refresh(db_consentimento)
     
     return db_consentimento
