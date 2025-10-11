@@ -10,19 +10,22 @@ router = APIRouter(prefix="/consentimentos", tags=["Consentimentos"])
 @router.post("/", response_model=schemas.RegistroConsentimento)
 def create_registro_consentimento(registro: schemas.RegistroConsentimentoCreate, db: Session = Depends(get_db)):
     """ Registra uma nova escolha de consentimento de um titular. """
-    titular = crud.get_titular(db, id=registro.titular_id)
+    titular = crud.get_titular(db, titular_id=registro.titular_id)
     if not titular:
         raise HTTPException(status_code=404, detail="Titular não encontrado.")
-    dispositivo = crud.get_dispositivo(db, id=registro.dispositivo_id)
+    dispositivo = crud.get_dispositivo(db, dispositivo_id=registro.dispositivo_id)
     if not dispositivo:
         raise HTTPException(status_code=404, detail="Dispositivo não encontrado.")
-    finalidade = crud.get_finalidade(db, id=registro.finalidade_id)
+    finalidade = crud.get_finalidade(db, finalidade_id=registro.finalidade_id)
     if not finalidade:
         raise HTTPException(status_code=404, detail="Finalidade não encontrada.")
-    opcao_tratamento = crud.get_opcao_tratamento(db, id=registro.opcao_tratamento_id)
+    opcao_tratamento = crud.get_opcao_tratamento(db, opcao_tratamento_id=registro.opcao_tratamento_id)
+    tipo_de_dado = crud.get_tipo_dado(db, tipo_dado_id=registro.tipo_de_dado_id)
+    if not tipo_de_dado:
+        raise HTTPException(status_code=404, detail="Tipo de dado não encontrado.")
     if not opcao_tratamento:
         raise HTTPException(status_code=404, detail="Opção de tratamento não encontrada.")
-    return crud.create_registro_consentimento(db=db, registro=registro)
+    return crud.create_registro_consentimento(db=db, consentimento=registro)
 
 @router.get("/titular/{titular_id}", response_model=List[schemas.RegistroConsentimento])
 def read_consentimentos_do_titular(titular_id: int, db: Session = Depends(get_db)):

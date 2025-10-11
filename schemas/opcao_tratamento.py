@@ -5,7 +5,7 @@ class OpcaoTratamentoBase(BaseModel):
     chave_politica: str
     titulo: str
     descricao: str
-    tipo_de_dado_id: int
+    tipo_dado_id: int
 
 class OpcaoTratamentoCreate(OpcaoTratamentoBase):
     pass

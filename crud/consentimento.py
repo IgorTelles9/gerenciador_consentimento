@@ -10,6 +10,7 @@ def create_registro_consentimento(db: Session, consentimento: schemas.RegistroCo
         titular_id=consentimento.titular_id,
         dispositivo_id=consentimento.dispositivo_id,
         finalidade_id=consentimento.finalidade_id,
+        tipo_de_dado_id=consentimento.tipo_de_dado_id,
         opcao_tratamento_id=consentimento.opcao_tratamento_id,
         status=models.StatusConsentimento.ATIVO,
     )
