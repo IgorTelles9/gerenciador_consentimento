@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from datetime import datetime
+from models.finalidade import BaseLegal
 
 class FinalidadeBase(BaseModel):
     nome: str
     descricao: str
-    base_legal: str = "Consentimento"
+    base_legal: BaseLegal
 
 class FinalidadeCreate(FinalidadeBase):
     pass
