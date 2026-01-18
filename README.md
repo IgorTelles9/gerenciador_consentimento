@@ -131,7 +131,7 @@ O MGC expõe uma API RESTful para ser consumida pelos outros módulos (PCPT e GP
 ### 6\. Configuração e Execução
 
 1.  **Variáveis de Ambiente:** Crie um arquivo `.env` na raiz do projeto com as credenciais do PostgreSQL e do broker MQTT.
-2.  **Instalação:** `uv add -r requirements.txt`
-3.  **Migrações:** Execute `alembic upgrade head` para criar o esquema do banco de dados no PostgreSQL.
-4.  **Execução:** Execute `uvicorn main:app --reload` para iniciar o servidor da API.
+2.  **Instalação:** `uv sync`
+3.  **Migrações:** Execute `uv run alembic upgrade head` para criar o esquema do banco de dados no PostgreSQL.
+4.  **Execução:** Execute `uv run uvicorn main:app --reload` para iniciar o servidor da API.
 5.  **Documentação:** Acesse `http://127.0.0.1:8000/docs` para ver e interagir com a documentação automática da API (Swagger UI).

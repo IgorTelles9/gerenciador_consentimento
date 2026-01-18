@@ -10,6 +10,4 @@ class OpcaoDeTratamento(Base):
     chave_politica = Column(String, nullable=False, unique=True, index=True)
     titulo = Column(String, nullable=False, comment="Ex: Enviar todos os dados coletados em tempo real.")
     descricao = Column(String, nullable=False, comment="Ex: Os dados são coletados a cada 5 segundos e enviados em seguida, sem nenhum tipo de filtro ou tratamento.")
-    tipo_dado_id = Column(Integer, ForeignKey("tipos_de_dados.id"), nullable=False)
-    tipo_dado = relationship("TipoDeDado")
     created_at = Column(DateTime, default=datetime.now)
